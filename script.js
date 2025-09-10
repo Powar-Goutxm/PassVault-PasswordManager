@@ -1,5 +1,9 @@
 console.log("Script loaded");
 document.querySelector(".submit-btn").addEventListener("click", (e) => {
+  if (website.value === "" || username.value === "" || password.value === "") {
+    alert("Please fill all the fields");
+    return;
+  }
   e.preventDefault();
   console.log("Clicked");
   console.log(website.value, username.value, password.value);
@@ -8,14 +12,19 @@ document.querySelector(".submit-btn").addEventListener("click", (e) => {
   if (passwords == null) {
     let json = [];
     json.push({
-      username: website.value,
+      website: website.value,
       username: username.value,
       password: password.value,
     });
     alert("Password added successfully!");
     localStorage.setItem("passwords", JSON.stringify(json));
   } else {
-    json.push({ username: username.value, password: password.value });
+    let json = JSON.parse(localStorage.getItem("passwords"));
+    json.push({
+      website: website.value,
+      username: username.value,
+      password: password.value,
+    });
     alert("Password added successfully!");
     localStorage.setItem("passwords", JSON.stringify(json));
   }
